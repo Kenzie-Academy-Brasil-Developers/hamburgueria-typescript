@@ -38,7 +38,7 @@ export const CadastroForm  = () => {
         resolver: yupResolver(schema)
     })
 
-    const onSubmitLogin = (data:UserData) => {
+    const onSubmitCadastro = (data:UserData) => {
         console.log(data)
         alert("cadastrado com sucesso")
         history.push('/login')
@@ -46,7 +46,7 @@ export const CadastroForm  = () => {
 
     return(
         <>
-        <form onSubmit={handleSubmit(onSubmitLogin)}>
+        <form onSubmit={handleSubmit(onSubmitCadastro)}>
             <input
             placeholder='Digite seu Email'
             {...register("email")}/>

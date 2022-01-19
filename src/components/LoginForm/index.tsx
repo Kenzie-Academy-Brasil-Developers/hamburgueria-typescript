@@ -34,7 +34,7 @@ export const LoginForm  = () => {
     })
 
     const onSubmitLogin = (data:UserData) => {
-        signIn(DataTransfer);
+        signIn(data);
         console.log(data)
         alert("logado com sucesso")
         history.push('/dashboard')
