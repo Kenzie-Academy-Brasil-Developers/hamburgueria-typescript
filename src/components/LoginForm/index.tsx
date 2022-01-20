@@ -8,7 +8,7 @@ import { useAuth } from "../../provider/Auth"
 
 interface UserData {
     email:string;
-    senha:string;
+    password:string;
 }
 
 export const LoginForm  = () => {
@@ -21,7 +21,7 @@ export const LoginForm  = () => {
         email: yup.string()
         .required("Nome Obrigatório"),
 
-        senha: yup.string()
+        password: yup.string()
         .required("Senha obrigatória")
     })
 
@@ -51,8 +51,8 @@ export const LoginForm  = () => {
             <input
             placeholder='Digite sua Senha'
             type='password'
-            {...register("senha")}/>
-            <span>{errors.senha?.message}</span>
+            {...register("password")}/>
+            <span>{errors.password?.message}</span>
 
             <button type='submit'>Entrar</button>
         </form>

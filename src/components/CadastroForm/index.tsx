@@ -3,16 +3,19 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../provider/Auth';
 
 
 interface UserData {
     email:string;
     name:string;
-    idade:number;
-    senha:string;
+    age:number;
+    password:string;
 }
 
 export const CadastroForm  = () => {
+
+    const { signUp } = useAuth()
 
     const history = useHistory()
 
@@ -23,10 +26,10 @@ export const CadastroForm  = () => {
         name: yup.string()
         .required("Nome Obrigatório"),
 
-        idade: yup.string()
+        age: yup.string()
         .required('Idade Obrigatória'),
 
-        senha: yup.string()
+        password: yup.string()
         .required("Senha obrigatória")
     })
 
@@ -39,7 +42,7 @@ export const CadastroForm  = () => {
     })
 
     const onSubmitCadastro = (data:UserData) => {
-        console.log(data)
+        signUp(data)
         alert("cadastrado com sucesso")
         history.push('/login')
     }
@@ -59,13 +62,13 @@ export const CadastroForm  = () => {
 
             <input
             placeholder='Digite sua Idade'
-            {...register("idade")}/>
-            <span>{errors.idade?.message}</span>
+            {...register("age")}/>
+            <span>{errors.age?.message}</span>
             
             <input
             placeholder='Digite sua Senha'
-            {...register("senha")}/>
-            <span>{errors.senha?.message}</span>
+            {...register("password")}/>
+            <span>{errors.password?.message}</span>
 
             <button type='submit'>Cadastrar</button>
         </form>

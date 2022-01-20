@@ -1,10 +1,11 @@
 import { useProducts } from "../../provider/Produtos";
-import { useCart } from "../../provider/Carrinho";
+// import { useCart } from "../../provider/Carrinho";
+
 
 export const Produtos = () => {
     
     const { products } = useProducts();
-    const { adicionar } = useCart()
+    // const { adicionar } = useCart()
 
     return(
         <>
@@ -16,7 +17,7 @@ export const Produtos = () => {
                     <p>{produto.name}</p>
                     <p>{produto.category}</p>
                     <strong>{produto.price.toFixed(2)}</strong>
-                    <button onClick={() => adicionar(produto.id)}>Remover</button>
+                    {/* <button onClick={() => adicionar(produto)}>Remover</button> */}
                 </li>))}
             </ul>
         </div>

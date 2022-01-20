@@ -33,21 +33,21 @@ const CartContext = createContext<CartProviderData>({} as CartProviderData);
 
 export const CartProvider = ({children}:ChildrenProps) => {
 
-    const [carrinho, setCarrinho] = useState<Produto[]>([]);
+    const [cart, setCart] = useState<Produto[]>([]);
     
     const { userId} = useAuth()
     const token = (localStorage.getItem("@hamburgueria:token") || "{}")
 
 
     axios
-    .get(`minhaapai.com/cart?userId=${userId}`)
-    .then(response => setCarrinho(response.data))
+    .get(`https://hamburguer-json.herokuapp.com/carrinho=${userId}`)
+    .then(response => setCart(response.data))
     .catch((err) => console.log(err))
 
     // adicionar no carinho
     const adicionar = (produtosData: ProductsCart) => {
       axios
-      .post("http://minhaapi.heroku.com/carrinho",produtosData, {headers: {
+      .post("https://hamburguer-json.herokuapp.com/carrinho",produtosData, {headers: {
         Authorization: `Bearer ${token}`,
       },
     })
@@ -58,7 +58,7 @@ export const CartProvider = ({children}:ChildrenProps) => {
     // remover do carrinho
     const remover = (produtosDelete: number) => {
       axios
-      .post(`http://minhaapi.heroku.com/carrinho${produtosDelete}`,{headers: {
+      .post(`https://hamburguer-json.herokuapp.com/produtoscarrinho${produtosDelete}`,{headers: {
         Authorization: `Bearer ${token}`
       },
     })
@@ -66,7 +66,7 @@ export const CartProvider = ({children}:ChildrenProps) => {
     .catch((err) => console.log(err))
     }
     return(
-      <CartContext.Provider value={{remover,adicionar,carrinho,setCarrinho}}>
+      <CartContext.Provider value={{remover,adicionar,cart}}>
         {children}
       </CartContext.Provider>
     )

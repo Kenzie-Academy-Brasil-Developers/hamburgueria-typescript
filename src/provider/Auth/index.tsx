@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: SignInProps) => {
 
   const signUp = (userData: CadastroProps) => {
     axios
-    .post("http://minhaapi.heroku.com/register",userData)
+    .post("https://hamburguer-json.herokuapp.com/register",userData)
     .then((_) => {
       history.push("/login")
     })
@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: SignInProps) => {
 
   const signIn = ( userData: LoginProps) => {
       axios
-      .post("http://minhaapi.heroku.com/login", userData)
+      .post("https://hamburguer-json.herokuapp.com/login", userData)
       .then((response) => {
           localStorage.setItem("@hamburgueria:token", response.data.token);
           

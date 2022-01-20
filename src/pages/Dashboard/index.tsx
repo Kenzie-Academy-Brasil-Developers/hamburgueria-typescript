@@ -1,9 +1,10 @@
-
+import { Carrinho } from "../../components/Carrinho"
 
 export const Dashboard = () => {
     return(
         <>
-        Dashboard
+        carrinho
+        <Carrinho/>
         </>
     )
 }

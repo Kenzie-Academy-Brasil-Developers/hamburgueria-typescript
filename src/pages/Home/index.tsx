@@ -1,9 +1,10 @@
-
+import { Produtos } from "../../components/Produtos"
 
 export const Home = () => {
     return(
         <>
-        Home
+        home
+        <Produtos/>
         </>
     )
 }
