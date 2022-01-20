@@ -1,4 +1,7 @@
 import { AuthProvider } from "./Auth";
+import { CartProvider } from "./Carrinho";
+import { ProductsProvider } from "./Produtos";
+
 import { ReactNode } from "react";
 
 interface SignInProps {
@@ -8,7 +11,11 @@ interface SignInProps {
 const Provider = ({children}: SignInProps) => {
     return(
         <AuthProvider>
-            {children}
+            <ProductsProvider>
+                <CartProvider>
+                    {children}
+                </CartProvider>
+            </ProductsProvider>
         </AuthProvider>
     )
 }
