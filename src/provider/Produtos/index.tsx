@@ -25,9 +25,11 @@ export const ProductsProvider = ({children}: ChildrenProps) =>  {
     const [products,setProducts] = useState<Produto[]>([]);
 
     axios
-    .get("https://hamburguer-json.herokuapp.com/produtos")
+    .get("https://hamburguer-json.herokuapp.com/products")
     .then(response => setProducts(response.data))
     .catch(err => console.log(err))
+
+    
 
     return(
         <ProductsContext.Provider value={{products}}>

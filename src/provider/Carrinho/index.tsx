@@ -40,14 +40,14 @@ export const CartProvider = ({children}:ChildrenProps) => {
 
 
     axios
-    .get(`https://hamburguer-json.herokuapp.com/carrinho=${userId}`)
+    .get(`https://hamburguer-json.herokuapp.com/cart=${userId}`)
     .then(response => setCart(response.data))
     .catch((err) => console.log(err))
 
     // adicionar no carinho
     const adicionar = (produtosData: ProductsCart) => {
       axios
-      .post("https://hamburguer-json.herokuapp.com/carrinho",produtosData, {headers: {
+      .post("https://hamburguer-json.herokuapp.com/cart",produtosData, {headers: {
         Authorization: `Bearer ${token}`,
       },
     })
