@@ -15,7 +15,7 @@ export const Dashboard = () => {
          <p>Hamburguer <strong>Shop</strong></p> 
 
          <FiShoppingBag color="#219653" fontSize={40} /><p>{cart.length}</p>
-        <button onClick={() => history.push('/')}>Home</button>
+        <button onClick={() => history.push('/produtos')}>Loja</button>
         </header>
         carrinho
 

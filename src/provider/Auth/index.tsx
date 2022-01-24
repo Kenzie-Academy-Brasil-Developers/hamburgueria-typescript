@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: SignInProps) => {
     const accessToken = localStorage.getItem('token')
     const user = localStorage.getItem('user')
 
-
+   
     if(accessToken && user){
       return {
         accessToken, user : JSON.parse(user)
@@ -70,7 +70,6 @@ export const AuthProvider = ({ children }: SignInProps) => {
           console.log(response.data)
       
           setAuth({accessToken, user});
-          toast.success('logado com sucesso')
 
           history.push("/dashboard");
           })

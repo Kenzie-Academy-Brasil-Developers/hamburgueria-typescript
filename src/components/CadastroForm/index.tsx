@@ -7,6 +7,8 @@ import { useAuth } from '../../provider/Auth';
 
 import { FiShoppingBag } from 'react-icons/fi';
 
+import { toast } from 'react-toastify';
+
 import {Container,Formulario, Button, Login, Container2, Paragrafo, Card, Span  } from './styles';
 
 interface UserData {
@@ -44,12 +46,14 @@ export const CadastroForm  = () => {
     const onSubmitCadastro = (data:UserData) => {
      console.log(data)
         signUp(data)
+
+        toast.success('cadastrado com sucesso')
         history.push('/login')
     }
     
     return(
         <>
-        <button onClick={() => history.push('/')}>Home</button>
+        <button onClick={() => history.push('/produtos')}>Loja</button>
             <Paragrafo>
                 Burguer <strong>Kenzie</strong>
             </Paragrafo>

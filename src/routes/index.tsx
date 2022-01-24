@@ -11,7 +11,7 @@ export const Routes = () => {
         <>
         <Switch>
             {/* Cadastro */}
-            <Route path='/register'>
+            <Route exact path='/'>
                 <Cadastro/>
             </Route>
 
@@ -21,7 +21,7 @@ export const Routes = () => {
             </Route>
 
             {/* Home */}
-            <Route exact path='/'>
+            <Route  path='/produtos'>
                 <Home/>
             </Route>
 

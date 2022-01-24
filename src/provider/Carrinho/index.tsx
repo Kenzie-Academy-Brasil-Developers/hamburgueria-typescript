@@ -18,7 +18,6 @@ interface CartProviderData {
   cart: Produto[];
   adicionar: (data: Produto) => void;
   remover: (productId: Produto) => void;
-  // amount: (product: Produto) => void;
   // subAmout: ( product: Produto) => void;
 }
 
@@ -45,26 +44,6 @@ export const CartProvider = ({children}:ChildrenProps) => {
       }
       setCart([...cart,newData])
     } 
-
-
-
-    // const removerTodos = () => {
-    //   cart.map((produtos) => {
-    //     axios
-    //     .delete(`https://hamburguer-json.herokuapp.com/cart${produtos.id}`, {
-    //       headers: {
-    //         Authorization: `Bearer ${accessToken}`
-    //       }
-    //     })
-    //     .then((response) => {
-    //       setCart([])
-    //     })
-    //     .catch((err) => {
-    //       console.log(err)
-    //     })
-    //   })
-    // }
-
     
     return(
       <CartContext.Provider value={{remover,adicionar,cart}}>

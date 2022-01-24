@@ -40,7 +40,7 @@ export const LoginForm = () => {
 
   return (
     <>
-        <button onClick={() => history.push("/")}>Home</button>
+        <button onClick={() => history.push("/produtos")}>Loja</button>
         <Paragrafo>
           Burguer <strong>Kenzie</strong>
         </Paragrafo>
@@ -78,7 +78,7 @@ export const LoginForm = () => {
         
            <Para>
             
-             <button onClick={() => history.push("/register")}>Cadastre</button>
+             <button onClick={() => history.push("/")}>Cadastre</button>
             sua conta para saborear muitas delicias e matar sua fome!
             </Para>
         

@@ -15,9 +15,9 @@ export const Home = () => {
         <Header>
          <p>Burguer <strong>Kenzie</strong></p>
             <div>
-               <button onClick={() => history.push('/dashboard')}><FiShoppingBag color="#219653" fontSize={40} /></button><p>{cart.length}</p> 
+               <button onClick={() => history.push('/dashboard')}><FiShoppingBag color="#219653" fontSize={40} /><span>{cart.length}</span></button> 
                 <button onClick={() => history.push('/login')}>Login</button>
-                <button onClick={() => history.push('/register')}>Cadastrar</button>
+                <button onClick={() => history.push('/')}>Cadastrar</button>
             </div> 
 
         </Header>
