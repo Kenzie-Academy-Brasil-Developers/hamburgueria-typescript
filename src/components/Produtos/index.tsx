@@ -1,26 +1,27 @@
 import { useProducts } from "../../provider/Produtos";
-// import { useCart } from "../../provider/Carrinho";
+import { Container, Imagem } from "./styles";
+import { useCart } from "../../provider/Carrinho";
 
 
 export const Produtos = () => {
     
     const { products } = useProducts();
-    // const { adicionar } = useCart()
+    const { adicionar } = useCart()
 
     return(
         <>
-        <div>
+        <Container>
             <ul>
                 {products.map((produto) =>
                  (<li key={produto.id}>
-                    <img src={produto.img} alt={produto.name}/>
+                    <Imagem src={produto.img} alt={produto.name}/>
                     <p>{produto.name}</p>
                     <p>{produto.category}</p>
                     <strong>{produto.price.toFixed(2)}</strong>
-                    {/* <button onClick={() => adicionar(produto)}>Remover</button> */}
+                    <button onClick={() => adicionar(produto)}>Adicionar</button>
                 </li>))}
             </ul>
-        </div>
+        </Container>
         </>
     )
 }

@@ -1,14 +1,12 @@
+
 import { createContext, useContext, ReactNode, useState } from "react";
 
-import axios from "axios";
-import { useAuth } from "../Auth";
 
 interface ChildrenProps {
     children:ReactNode;
 }
 
 interface Produto {
-  userId: number;
   name:string;
   price:number;
   category:string;
@@ -16,17 +14,12 @@ interface Produto {
   id:number;
 }
 
-interface ProductsCart {
-    name:string;
-    price:number;
-    category:string;
-    img:string;
-}
-
 interface CartProviderData {
   cart: Produto[];
-  adicionar: (product: Produto) => void;
-  remover: (product: number) => void;
+  adicionar: (data: Produto) => void;
+  remover: (productId: Produto) => void;
+  // amount: (product: Produto) => void;
+  // subAmout: ( product: Produto) => void;
 }
 
 const CartContext = createContext<CartProviderData>({} as CartProviderData);
@@ -34,37 +27,45 @@ const CartContext = createContext<CartProviderData>({} as CartProviderData);
 export const CartProvider = ({children}:ChildrenProps) => {
 
     const [cart, setCart] = useState<Produto[]>([]);
+
     
-    const { userId} = useAuth()
-    const token = (localStorage.getItem("@hamburgueria:token") || "{}")
-
-
-    axios
-    .get(`https://hamburguer-json.herokuapp.com/cart=${userId}`)
-    .then(response => setCart(response.data))
-    .catch((err) => console.log(err))
-
-    // adicionar no carinho
-    const adicionar = (produtosData: ProductsCart) => {
-      axios
-      .post("https://hamburguer-json.herokuapp.com/cart",produtosData, {headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(() => alert("adiconado"))
-      .catch((err) => console.log(err))
-    }
-
     // remover do carrinho
-    const remover = (produtosDelete: number) => {
-      axios
-      .post(`https://hamburguer-json.herokuapp.com/produtoscarrinho${produtosDelete}`,{headers: {
-        Authorization: `Bearer ${token}`
-      },
-    })
-    .then(() => alert("removido"))
-    .catch((err) => console.log(err))
+    const remover = (produto: Produto) => {
+      const removido = cart.filter((item) => item.id !== produto.id)
+      setCart(removido)
     }
+
+    const adicionar = (data: Produto) => {
+      const newData = {
+        name:data.name,
+        price:data.price,
+        category:data.category,
+        img:data.img,
+        id:data.id
+      }
+      setCart([...cart,newData])
+    } 
+
+
+
+    // const removerTodos = () => {
+    //   cart.map((produtos) => {
+    //     axios
+    //     .delete(`https://hamburguer-json.herokuapp.com/cart${produtos.id}`, {
+    //       headers: {
+    //         Authorization: `Bearer ${accessToken}`
+    //       }
+    //     })
+    //     .then((response) => {
+    //       setCart([])
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //     })
+    //   })
+    // }
+
+    
     return(
       <CartContext.Provider value={{remover,adicionar,cart}}>
         {children}

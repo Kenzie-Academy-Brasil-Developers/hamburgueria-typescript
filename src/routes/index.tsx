@@ -26,7 +26,7 @@ export const Routes = () => {
             </Route>
 
             {/* Login */}
-            <Route path='login'>
+            <Route path='/login'>
                <Login/> 
             </Route>
         </Switch>

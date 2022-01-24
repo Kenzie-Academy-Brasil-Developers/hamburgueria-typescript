@@ -1,9 +1,17 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { report } from "process";
+import { dataAttr } from "@chakra-ui/utils";
 
 interface SignInProps {
   children: ReactNode;
+}
+
+interface AuthState {
+  accessToken: string;
+  user: User;
 }
 
 interface LoginProps {
@@ -12,15 +20,21 @@ interface LoginProps {
 }
 
 interface CadastroProps {
-  email:string;
   name:string;
-  age:number;
+  email:string;
   password:string;
 }
 
+interface User{
+  email: string;
+  name: string;
+  id: string;
+  cart:[]
+}
+
 interface AuthProviderData {
-  userId: string;
-  authToken: string;
+  accessToken: string;
+  user: User
   signIn: (auth: LoginProps) => void;
   signUp: (auth: CadastroProps) => void;
   logout: () => void;
@@ -31,48 +45,71 @@ const AuthContext = createContext<AuthProviderData>({} as AuthProviderData);
 export const AuthProvider = ({ children }: SignInProps) => {
   const history = useHistory();
 
-  const [authToken, setAuthToken] = useState<string>(
-    () => localStorage.getItem("@hamburgueria:token") || ""
-  );
-  const [userId, setUserId] = useState<string>(
-    () => localStorage.getItem("@hamburgueria:userId") || ""
-    );
+  const [auth, setAuth] = useState<AuthState>(() => {
+    const accessToken = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
 
-  const signUp = (userData: CadastroProps) => {
-    axios
-    .post("https://hamburguer-json.herokuapp.com/register",userData)
-    .then((_) => {
-      history.push("/login")
-    })
-    .catch((err) => console.log(err))
-  }
-  
+
+    if(accessToken && user){
+      return {
+        accessToken, user : JSON.parse(user)
+      }
+    }
+    return {} as AuthState
+  });
 
   const signIn = ( userData: LoginProps) => {
-      axios
-      .post("https://hamburguer-json.herokuapp.com/login", userData)
-      .then((response) => {
-          localStorage.setItem("@hamburgueria:token", response.data.token);
-          
-          localStorage.setItem("@hamburgueria:userId", response.data.user.id);
+    axios
+       .post("https://hamburguer-json.herokuapp.com/login", userData)
+       .then((response) => {
+         const {  accessToken, user } = response.data
 
-          setAuthToken(response.data.token);
-          setUserId(response.data.user.id)
+          localStorage.setItem("token", accessToken);
+          localStorage.setItem("user", JSON.stringify(user))
+
+          console.log(response.data)
+      
+          setAuth({accessToken, user});
+          toast.success('logado com sucesso')
+
           history.push("/dashboard");
-          console.log(userData)
-          alert("Logado com sucesso")
-      })
-      .catch((err) => console.log(err, userData));;
+          })
+
+          .catch((err) => {
+            console.log(err)
+            toast.error("Conta Não existe")
+            history.push("/register");
+          })
+ 
   }
+      
+      const signUp = (userData: CadastroProps) => {
+        const newData = {
+          email: userData.email,
+          password: userData.password,
+          name: userData.name,
+        }
+        axios
+        .post("https://hamburguer-json.herokuapp.com/register",newData)
+        .then((response) => {
+          toast.success("Cadastrado com sucesso")
+          history.push("/login")
+          console.log(response.data)
+        })
+        .catch((err) => {
+          console.log(err)
+          toast.error("ops essa conta ja existe")})
+      }
+
 
   const logout = () => {
       localStorage.clear();
-      setAuthToken("");
+      setAuth({} as AuthState);
       history.push("/");
   }
 
   return(
-      <AuthContext.Provider value={{ authToken, logout,signIn, signUp,userId}}>
+      <AuthContext.Provider value={{ accessToken: auth.accessToken, user: auth.user, logout,signIn, signUp}}>
           {children}
       </AuthContext.Provider>
   )

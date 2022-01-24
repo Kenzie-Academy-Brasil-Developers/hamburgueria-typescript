@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useState } from "react";
+import { createContext, useContext, ReactNode, useState, useEffect } from "react";
 
 import axios from "axios";
 
@@ -24,10 +24,13 @@ export const ProductsProvider = ({children}: ChildrenProps) =>  {
 
     const [products,setProducts] = useState<Produto[]>([]);
 
-    axios
-    .get("https://hamburguer-json.herokuapp.com/products")
-    .then(response => setProducts(response.data))
-    .catch(err => console.log(err))
+
+       
+        axios
+            .get("https://hamburguer-json.herokuapp.com/products")
+            .then(response => setProducts(response.data))
+            .catch(err => console.log(err))
+
 
     
 

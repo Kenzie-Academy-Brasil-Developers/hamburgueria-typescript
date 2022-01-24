@@ -1,61 +1,91 @@
-import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { FiShoppingBag } from "react-icons/fi"
 
-import { useAuth } from "../../provider/Auth"
+import { useAuth } from "../../provider/Auth";
+import { Container, Card, Formulario, Paragrafo, Span, Button, Para } from "./styles";
 
 interface UserData {
-    email:string;
-    password:string;
+  email: string;
+  password: string;
 }
 
-export const LoginForm  = () => {
+export const LoginForm = () => {
+  const { signIn } = useAuth();
 
-    const { signIn } = useAuth()
+  const history = useHistory();
 
-    const history = useHistory()
+  const schema = yup.object().shape({
+    email: yup.string().required("Email Obrigatório"),
 
-    const schema = yup.object().shape({
-        email: yup.string()
-        .required("Nome Obrigatório"),
+    password: yup.string().required("Senha obrigatória"),
+  });
 
-        password: yup.string()
-        .required("Senha obrigatória")
-    })
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserData>({
+    resolver: yupResolver(schema),
+  });
 
-    const {
-        register,
-        handleSubmit,
-        formState: {errors}
-    } = useForm<UserData>({
-        resolver: yupResolver(schema)
-    })
+  const onSubmitLogin = (data: UserData) => {
+    signIn(data);
+    console.log(data);
+    history.push("/dashboard");
+  };
 
-    const onSubmitLogin = (data:UserData) => {
-        signIn(data);
-        console.log(data)
-        alert("logado com sucesso")
-        history.push('/dashboard')
-    }
+  return (
+    <>
+        <button onClick={() => history.push("/")}>Home</button>
+        <Paragrafo>
+          Burguer <strong>Kenzie</strong>
+        </Paragrafo>
+     
 
-    return(
-        <>
-        <form onSubmit={handleSubmit(onSubmitLogin)}>
-            <input
-            placeholder='Digite seu Email'
-            {...register("email")}/>
-            <span>{errors.email?.message}</span>
+    <Container>
+        <Card>
+          <p>
+            <FiShoppingBag  color="#219653" fontSize={20} />
+            A vida é como um sanduiche , é preciso recheá-la com os{" "}
+            <strong>melhores</strong> ingredientes.
+          </p>
+        </Card>
+      
 
-            <input
-            placeholder='Digite sua Senha'
-            type='password'
-            {...register("password")}/>
-            <span>{errors.password?.message}</span>
+      <Formulario onSubmit={handleSubmit(onSubmitLogin)}>
+        <div>
 
-            <button type='submit'>Entrar</button>
-        </form>
-        </>
-    )
-}
+          <p>Login</p>
+        </div>
+
+        
+        <input placeholder="Digite seu Email" {...register("email")} />
+        <Span>{errors.email?.message}</Span>
+        
+        <input
+          placeholder="Digite sua Senha"
+          type="password"
+          {...register("password")}
+        />
+        <Span>{errors.password?.message}</Span>
+       
+
+        <Button type="submit">Entrar</Button>
+        
+           <Para>
+            
+             <button onClick={() => history.push("/register")}>Cadastre</button>
+            sua conta para saborear muitas delicias e matar sua fome!
+            </Para>
+        
+        
+      </Formulario>
+
+    </Container>
+    </>
+  );
+};
