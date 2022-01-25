@@ -35,12 +35,12 @@ export const LoginForm = () => {
   const onSubmitLogin = (data: UserData) => {
     signIn(data);
     console.log(data);
-    history.push("/dashboard");
+    history.push("/produtos");
   };
 
   return (
     <>
-        <button onClick={() => history.push("/produtos")}>Loja</button>
+        
         <Paragrafo>
           Burguer <strong>Kenzie</strong>
         </Paragrafo>

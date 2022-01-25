@@ -1,9 +1,6 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { report } from "process";
-import { dataAttr } from "@chakra-ui/utils";
 
 interface SignInProps {
   children: ReactNode;
@@ -70,13 +67,13 @@ export const AuthProvider = ({ children }: SignInProps) => {
           console.log(response.data)
       
           setAuth({accessToken, user});
-
+          alert("Logado com sucesso")
           history.push("/dashboard");
           })
 
           .catch((err) => {
             console.log(err)
-            toast.error("Conta Não existe")
+            alert("Conta Não existe")
             history.push("/register");
           })
  
@@ -91,13 +88,13 @@ export const AuthProvider = ({ children }: SignInProps) => {
         axios
         .post("https://hamburguer-json.herokuapp.com/register",newData)
         .then((response) => {
-          toast.success("Cadastrado com sucesso")
+         alert("Cadastrado com sucesso")
           history.push("/login")
           console.log(response.data)
         })
         .catch((err) => {
           console.log(err)
-          toast.error("ops essa conta ja existe")})
+         alert("ops essa conta ja existe")})
       }
 
 

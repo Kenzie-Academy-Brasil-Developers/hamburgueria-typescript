@@ -18,7 +18,6 @@ interface CartProviderData {
   cart: Produto[];
   adicionar: (data: Produto) => void;
   remover: (productId: Produto) => void;
-  // subAmout: ( product: Produto) => void;
 }
 
 const CartContext = createContext<CartProviderData>({} as CartProviderData);

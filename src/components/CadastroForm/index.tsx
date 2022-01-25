@@ -53,7 +53,6 @@ export const CadastroForm  = () => {
     
     return(
         <>
-        <button onClick={() => history.push('/produtos')}>Loja</button>
             <Paragrafo>
                 Burguer <strong>Kenzie</strong>
             </Paragrafo>
